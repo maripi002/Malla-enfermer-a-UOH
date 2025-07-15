@@ -124,17 +124,29 @@ function crearMalla() {
       div.classList.add("ramo");
       div.textContent = ramo;
 
-      if (aprobados.includes(ramo)) {
+      const aprobado = aprobados.includes(ramo);
+      const puedeTomar = puedeAprobar(ramo);
+
+      if (aprobado) {
         div.classList.add("aprobado");
-      } else if (!puedeAprobar(ramo)) {
+      } else if (!puedeTomar) {
         div.classList.add("bloqueado");
       }
 
       div.addEventListener("click", () => {
-        if (div.classList.contains("bloqueado") || div.classList.contains("aprobado")) return;
+        if (div.classList.contains("bloqueado")) return;
 
-        div.classList.add("aprobado");
-        aprobados.push(ramo);
+        if (div.classList.contains("aprobado")) {
+          // Desmarcar
+          div.classList.remove("aprobado");
+          const index = aprobados.indexOf(ramo);
+          if (index > -1) aprobados.splice(index, 1);
+        } else {
+          // Marcar como aprobado
+          div.classList.add("aprobado");
+          aprobados.push(ramo);
+        }
+
         localStorage.setItem("ramosAprobados", JSON.stringify(aprobados));
         actualizarMalla();
       });
