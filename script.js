@@ -104,7 +104,12 @@ const prerrequisitos = {
   "Ingles VI": ["Inglés V"],
   "Internado I": ["Seminario de Investigación II", "Modelos emergentes del cuidado", "Cuidados complejos en enfermería"],
   "Internado II": ["Internado I"],
-  "Integración profesional": ["Internado I"]
+  "Integración profesional": ["Internado I"],
+  "Enfermería en urgencia": [].concat(
+    ...Object.values(ramosPorSemestre)
+      .slice(0, 8) // Semestres 1 a 8
+      .flat()
+  )
 };
 
 const aprobados = JSON.parse(localStorage.getItem("ramosAprobados")) || [];
